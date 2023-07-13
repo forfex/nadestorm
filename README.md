@@ -1,8 +1,7 @@
-# Mantine + Vite template
+# Nadestorm
+Web application for CS:GO grenades.
 
-Official [Mantine](https://mantine.dev/) + [Vite](https://vitejs.dev/) template.
-
-Links:
-
-- [Mantine documentation](https://mantine.dev/)
-- [Vite documentation](https://vitejs.dev/)
+### Build
+**yarn dev**</br>
+**yarn build**
+**yarn preview**
