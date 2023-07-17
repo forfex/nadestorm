@@ -1,4 +1,5 @@
 import { Badge, Button, Card, Group, Image, Paper, Text, createStyles } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -10,6 +11,9 @@ const useStyles = createStyles((theme) => ({
       boxShadow: theme.shadows.xl,
       zIndex: 1000,
     },
+    '&:active': {
+      outline: '2px solid #333'
+    }
   },
 
   title: {
@@ -20,6 +24,11 @@ const useStyles = createStyles((theme) => ({
 
 export function MapItem(props: any) {
   const { classes } = useStyles();
+  
+  const linkTo = {
+    pathname: '/grenades',
+    search: `?map=${props.name}`
+  }
 
   let poolBadge;
   let tags;
@@ -37,6 +46,7 @@ export function MapItem(props: any) {
   }
 
   return(
+    <Link to={linkTo} style={{ textDecoration: 'none' }}>
     <Card shadow="sm" padding="lg" radius="md" withBorder className={classes.card}>
       <Card.Section>
         <Image
@@ -50,5 +60,6 @@ export function MapItem(props: any) {
         {poolBadge}
       </Group>
     </Card>
+    </Link>
   )
 }

@@ -8,7 +8,7 @@ TbBook,
 TbBomb,
 TbLogout,
 } from "react-icons/tb"
-import { Link } from 'react-router-dom';
+import { Link, unstable_HistoryRouter, useLocation } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -54,6 +54,11 @@ const useStyles = createStyles((theme) => ({
     marginRight: theme.spacing.sm,
   },
 
+  linkDisabled: {
+    pointerEvents: 'none',
+    color: '#555',
+  },
+
   linkActive: {
     '&, &:hover': {
       backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
@@ -67,7 +72,7 @@ const useStyles = createStyles((theme) => ({
 
 const data = [
   { link: '', label: 'Maps', icon: TbMap },
-  { link: '/grendes', label: 'Grenades', icon: TbBomb },
+  { link: '/grenades', label: 'Grenades', icon: TbBomb },
   { link: '/tactics', label: 'Tactics', icon: TbBook },
 ];
 
@@ -75,19 +80,16 @@ export function NavbarSimple() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState('Billing');
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search)
+  const map = queryParams.get('map');
+
   const links = data.map((item) => (
-    <Link to={item.link} style={{ textDecoration: 'none' }}> 
-      <a
-        className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-        href={item.link}
-        key={item.label}
-        onClick={(event) => {
-          setActive(item.label);
-        }}
-      >
-        <item.icon size="18" className={classes.linkIcon}/>
-        <span>{item.label}</span>
-      </a>
+    <Link to={{pathname: item.link, search: `?map=${map}`}} className={cx(classes.link, { [classes.linkActive]: item.label === active },
+      {[classes.linkDisabled]: map === null && item.label != 'Maps'}
+    )} key={item.label}>
+      <item.icon size="18" className={cx(classes.linkIcon, {[classes.linkDisabled]: map === null && item.label != 'Maps'})}/>
+      <span>{item.label}</span>
     </Link>
   ));
 
