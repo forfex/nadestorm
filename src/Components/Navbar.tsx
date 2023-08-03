@@ -73,7 +73,7 @@ const useStyles = createStyles((theme) => ({
 const data = [
   { link: '', label: 'Maps', icon: TbMap },
   { link: '/grenades', label: 'Grenades', icon: TbBomb },
-  { link: '/tactics', label: 'Tactics', icon: TbBook },
+  // { link: '/tactics', label: 'Tactics', icon: TbBook },
 ];
 
 export function NavbarSimple() {
@@ -93,6 +93,14 @@ export function NavbarSimple() {
     </Link>
   ));
 
+  
+  const createLink = (
+  <Link to={{pathname: "/create", search: `?map=${map}`}} className={cx(classes.link, { [classes.linkActive]: "Create" === active },
+  {[classes.linkDisabled]: location.pathname == "/"})} key={"Create"}>
+    <span>{"Create"}</span>
+   </Link>
+  )
+
   return (
     <Navbar width={{ sm: 300 }} p="lg">
       <Navbar.Section grow>
@@ -104,6 +112,7 @@ export function NavbarSimple() {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
+        {createLink}
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <TbLogout size="20" className={classes.linkIcon} />
           <span>Logout</span>
